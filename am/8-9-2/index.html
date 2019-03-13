@@ -1,6 +1,14 @@
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-    <head><script>var translations = {};</script>
+    <head>
+        <script>var translations = {};</script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
         <!-- Basic Page Needs
         ================================================== -->
@@ -13,9 +21,8 @@
         <!-- Title and meta description
         ================================================== -->
         
-        
         <title>
-        Ցուցանիշ 8.9.2 - Նպատակը  - 
+        Ցուցանիշ 8.9.2 - Նպատակը 8 - Decent jobs and economic growth
         </title>
         <meta name="description" content="">
         <meta property="og:description" content="">
@@ -43,7 +50,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css">
-        <link rel="stylesheet" href="/sdg-site-armenia/assets/css/default.css?v=20190313072142">
+        <link rel="stylesheet" href="/sdg-site-armenia/assets/css/default.css?v=20190313072159">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -51,7 +58,7 @@
         <link rel="stylesheet" href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css" />
         <link rel="stylesheet" href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' />
         <link rel="stylesheet" href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"><link rel="stylesheet" href="/sdg-site-armenia/assets/css/custom.css?v=20190313072142"></head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"><link rel="stylesheet" href="/sdg-site-armenia/assets/css/custom.css?v=20190313072159"></head>
 <body class="language-am">
 <!-- <div class="container"> -->
 
@@ -115,7 +122,7 @@
   <label for="indicator_search">
     <i class="fa fa-search" aria-hidden="true"></i><span>Որոնում:</span>
   </label>
-  <input id="indicator_search" title="Ցուցանիշների որոնում" placeholder="Ցուցանիշների որոնում" data-url="/sdg-site-armenia/am/indicators.json" data-pageurl="/sdg-site-armenia/am/search/?" />
+  <input id="indicator_search" title="Ցուցանիշների որոնում" placeholder="Ցուցանիշների որոնում" data-url="/sdg-site-armenia/am/indicators.json" data-pageurl="/sdg-site-armenia/am/search/?q=" />
 </div>
 
 
@@ -165,25 +172,12 @@
 <script>translations['indicator'] = {"chart":"Գծապատկեր","clear_all":"Մաքրել ամեն ինչ ","clear_selections":"Մաքրել նշվածները ","dataset_size_warning":"Տվյալները չափազանց շատ են գծապատկերում ցուցադրելու համար: Նրանցից ոչ բոլորը կցուցադրվեն, քանի դեռ չեք հանել որոշ նշվածները:","download_chart":"Ներբեռնել CSV գծապատկեր","download_csv":"Ներբեռնել CSV","download_csv_title":"Ներբեռնել որպես CSV","download_headline":"Ներբեռնել վերնագիրը որպես CSV","download_headline_title":"Ներբեռնել վերնագրի տվյալները որպես CSV","download_source":"Ներբեռնել աղբյուրը CSV","download_source_title":"Ներբեռնել աղբյուրի տվյալները, որպես CSV","download_table":"Ներբեռնել CSV աղյուսակը","edit":"Խմբագրել","edit_data":"Խմբագրել տվյալները","edit_metadata":"Խմբագրել մետատվյալները","footnote":"Ծանոթագրություն","geographical_area":"Աշխարհագրական դիրք","global_metadata":"Գլոբալ մետատվյալներ","global_metadata_blurb":"Այս աղյուսակը տեղեկատվություն է տրամադրում ՄԱԿ-ի վիճակագրական կոմիտեի սահմանած ԿԶՆ ցուցանիշների մետատվյալի մասին <a href=\"https://unstats.un.org/sdgs/metadata/\">Complete global metadata</a> ","legend_help":"Սեղմեք նկարագրությանը գծապատկերից անհատական գծերը հեռացնելու համար:","loading_map":"Քարտեզը բեռնվում է։","map":"Քարտեզ","national_metadata":"Ազգային մետատվյալներ","national_metadata_blurb":"Այս աղյուսակը տրամադրում է երկրի_անվանում վիճակագրությունում առկա համապատասխան գլոբալ ԿԶՆ ցուցանիշին ամենամոտ մետատվյալներ գործող ցուցանիշի վերաբերյալ։ Խնդրում ենք նկատի ունենալ, որ նույնիսկ այն դեպքում, երբ գլոբալ ԿԶՆ ցուցանիշը ամբողջությամբ հասանելի է երկրին_համապատասխան վիճակագրության մեջ, այս աղյուսակը պետք է ծառայի ազգային մեթոդաբանության և այլ երկրին_համապատասխան մետատվյալների վերաբերյալ տեղեկատվության համար:","no_data_hint":"Վերը նշված ֆիլտրերի պատճառով ընտրանք չկա","select_all":"Ընտրել ամբողջը","series_help":"Ընտրել ստորև բերված կատեգորիաները `տվյալների տարբեր ենթախմբերը տեսնելու համար: Ոմանք հասանելի չեն լինի, մինչև չընտրվի առավել բարձր մակարդակը: ","source":"Աղբյուր","sources":"Աղբյուրներ","sub_categories":"Ենթախմբեր","table":"Աղյուսակ","unit_of_measurement":"Չափման  միավոր","units_type":"Միավորների տեսակը","variable_hint":"Հասանելի է, երբ ընտրված է դաշտը '%field' ","view_indicator_list":"Տեսնել այս նպատակի ցուցանիշների ցանկը"};</script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="heading indicator goal-8">
   <div class="container">
     <div class="row">
       <div class="col-xs-4 col-md-3 col-lg-2">
         <a href="/sdg-site-armenia/am/decent-jobs-and-economic-growth" title="Տեսնել այս նպատակի ցուցանիշների ցանկը">
-          <img src="/sdg-site-armenia/assets/img/goals/am/8.png" alt="Արժանապատիվ աշխատանք և տնտեսական աճ - Նպատակը 8" />
+          <img src="https://open-sdg.github.io/sdg-translations/assets/img/goals/am/8.png" alt="Արժանապատիվ աշխատանք և տնտեսական աճ - Նպատակը 8" />
         </a>
       </div>
       <div class="col-xs-8 col-md-9 col-lg-10">
@@ -260,8 +254,12 @@
             <div > <!-- formerly class="collapsible expanded" -->
               <!-- <h3 tabindex='0'>National Metadata</h3> -->
               <article>
-                <p>Այս աղյուսակը տրամադրում է երկրի_անվանում վիճակագրությունում առկա համապատասխան գլոբալ ԿԶՆ ցուցանիշին ամենամոտ մետատվյալներ գործող ցուցանիշի վերաբերյալ։ Խնդրում ենք նկատի ունենալ, որ նույնիսկ այն դեպքում, երբ գլոբալ ԿԶՆ ցուցանիշը ամբողջությամբ հասանելի է երկրին_համապատասխան վիճակագրության մեջ, այս աղյուսակը պետք է ծառայի ազգային մեթոդաբանության և այլ երկրին_համապատասխան մետատվյալների վերաբերյալ տեղեկատվության համար:</p>
-                  <table class="table table-hover">
+                <p>
+                  
+                  
+                  Այս աղյուսակը տրամադրում է երկրի_անվանում վիճակագրությունում առկա համապատասխան գլոբալ ԿԶՆ ցուցանիշին ամենամոտ մետատվյալներ գործող ցուցանիշի վերաբերյալ։ Խնդրում ենք նկատի ունենալ, որ նույնիսկ այն դեպքում, երբ գլոբալ ԿԶՆ ցուցանիշը ամբողջությամբ հասանելի է երկրին_համապատասխան վիճակագրության մեջ, այս աղյուսակը պետք է ծառայի ազգային մեթոդաբանության և այլ երկրին_համապատասխան մետատվյալների վերաբերյալ տեղեկատվության համար:
+                </p>
+                <table class="table table-hover">
   
   
   
@@ -785,7 +783,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 <script>
   var remoteDataBaseUrl = 'https://armstat.github.io/sdg-data-armenia/staging';
 </script>
-<script src='/sdg-site-armenia/assets/js/sdg.js?v=20190313072142'></script>
+<script src='/sdg-site-armenia/assets/js/sdg.js?v=20190313072159'></script>
 <script>
 $(function() {
     if($('#indicatorData').length) {
