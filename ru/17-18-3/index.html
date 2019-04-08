@@ -8,7 +8,51 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
     <head>
-        <script>var translations = {};</script>
+        <script>
+// JavaScript container for translation data.
+var translations = {
+  //Javascript version of the "t" filter from jekyll-open-sdg-plugins.
+  t: function(key) {
+
+    if (!key || typeof key !== 'string') {
+      return '';
+    }
+
+    // The majority of uses of this function are to translate disaggregation
+    // data. To spare data providers of needing to enter "data." in front of
+    // their disaggregation data, we do it for them here.
+    var originalKey = key;
+    if (!key.includes('.') && this.data) {
+      key = 'data.' + key.toLowerCase();
+    }
+
+    var drilled = this;
+    var levelsDrilled = 0;
+    var levels = key.split('.');
+
+    for (var level in levels) {
+      // If we have drilled down to soon, abort.
+      if (typeof drilled !== 'object') {
+        break;
+      }
+
+      if (levels[level] in drilled) {
+        drilled = drilled[levels[level]];
+        levelsDrilled += 1;
+      }
+    }
+
+    // If we didn't drill the right number of levels, return the original string.
+    if (levels.length != levelsDrilled) {
+      return originalKey;
+    }
+
+    // Otherwise we must have drilled all the way.
+    return drilled;
+  },
+};
+</script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
         <!-- Basic Page Needs
         ================================================== -->
@@ -50,7 +94,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.3/css/fixedColumns.dataTables.min.css">
-        <link rel="stylesheet" href="/sdg-site-armenia/assets/css/default.css?v=20190408000053">
+        <link rel="stylesheet" href="/sdg-site-armenia/assets/css/default.css?v=20190408060951">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -58,7 +102,7 @@
         <link rel="stylesheet" href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css" />
         <link rel="stylesheet" href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' />
         <link rel="stylesheet" href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"><link rel="stylesheet" href="/sdg-site-armenia/assets/css/custom.css?v=20190408000053"></head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"><link rel="stylesheet" href="/sdg-site-armenia/assets/css/custom.css?v=20190408060951"></head>
 <body class="language-ru">
 <!-- <div class="container"> -->
 
@@ -134,7 +178,7 @@
 <script type="text/template" id="item_template">
   <% _.each(series, function(seriesItem) { %>
     <div class="variable-selector<% if(allowedFields.indexOf(seriesItem.field) == -1) { %> disallowed child<% }%>" data-field="<%=seriesItem.field%>">
-      <button class='accessBtn' tabindex='0'><h5><%=seriesItem.field%><i class="fa fa-chevron-down"></i></h5></button>
+      <button class='accessBtn' tabindex='0'><h5><%=translations.t(seriesItem.field)%><i class="fa fa-chevron-down"></i></h5></button>
       <div class="bar">
         <div class="selected"></div>
       </div>
@@ -144,11 +188,11 @@
           <button data-type="clear">Очистить всё</button>
         </div>
         <% _.each(seriesItem.values, function(item) { %>
-          <label><input type="checkbox" value="<%=item.value%>" data-field="<%=seriesItem.field%>" /><%=item.value%></label>
+          <label><input type="checkbox" value="<%=item.value%>" data-field="<%=seriesItem.field%>" /><%=translations.t(item.value)%></label>
         <% }); %>
       </div>
-      
-      <% if(allowedFields.indexOf(seriesItem.field) == -1) { %> 
+
+      <% if(allowedFields.indexOf(seriesItem.field) == -1) { %>
         <div class="variable-hint">Доступно, когда выбрано
         </div>
         <div class="no-data-hint">
@@ -164,25 +208,27 @@
   <% if(units.length) { %>
     <h5>Вид единиц</h5>
     <% _.each(units, function(unitsItem, index) { %>
-      <label><input type="radio" name="unit" value="<%=unitsItem%>" tabindex=0 <% if(!index) { %>checked="checked"<% } %> /> <%=unitsItem%></label>
+      <label><input type="radio" name="unit" value="<%=unitsItem%>" tabindex=0 <% if(!index) { %>checked="checked"<% } %> /> <%=translations.t(unitsItem)%></label>
     <% }); %>
   <% } %>
 </script>
 
 <script>translations['indicator'] = {"chart":"График","clear_all":"Очистить всё","clear_selections":"Очистить выделенное","dataset_size_warning":"В таблице слишком много данных, чтобы показать в графике. Чтобы увидеть все, удалите выделенное.","download_chart":"Скачать график CSV","download_csv":"Скачать CSV","download_csv_title":"Скачать в формате CSV","download_headline":"Скачать заголовки CSV","download_headline_title":"Скачать данные заголовков в формате CSV","download_source":"Скачать исходные CSV","download_source_title":"Скачать исходные данные в формате CSV","download_table":"Скачать табличные CSV","edit":"Редактировать","edit_data":"Редактировать данные","edit_metadata":"Редактировать метаданные","footnote":"Сноска","geographical_area":"Географический район","global_metadata":"Глобальные метаданные","global_metadata_blurb":"В этой таблице представлена информация для метаданных ЦУР показателей определенных статической комиссией ООН. Полные глобальные метаданные представлены статическим отделом ООН.","legend_help":"Нажмите на легенду, чтобы убрать линии из графика.","loading_map":"Загружка карты","map":"Карта","national_metadata":"Национальные метаданные","national_metadata_blurb":"В этой таблице представлены метаданные для фактического показателя, доступного из статистики ближайшей к соответствующему глобальному индикатору ЦУР. Обратите внимание, что даже если глобальный индикатор ЦУР полностью доступен из статистики, эту таблицу следует проконсультироваться для получения информации о национальной методологии и других специфичных метаданных.","no_data_hint":"Нет имеющихся вариантов из-за фильтров наверху.","select_all":"Выделить всё","series_help":"Выберите категории из выпадающего меню внизу, чтобы увидеть разные разбивки данных. Несколько не будет доступно, пока более высокий уровень не выбран. ","source":"Источник","sources":"Источники","sub_categories":"Субкатегории","table":"Таблица","unit_of_measurement":"Единица измерения","units_type":"Вид единиц","variable_hint":"Доступно, когда выбрано","view_indicator_list":"Посмотреть показательный список этой цели"};</script>
 
+<script>translations['data'] = {"sex":"секс","female":"женский","male":"мужчина","number":"Число"};</script>
+
 
 <div class="heading indicator goal-17">
   <div class="container">
     <div class="row">
       <div class="col-xs-4 col-md-3 col-lg-2">
-        <a href="/sdg-site-armenia/ru/partnerships-for-the-goals" title="Посмотреть показательный список этой цели">
+        <a href="/sdg-site-armenia/ru/17" title="Посмотреть показательный список этой цели">
           <img src="https://open-sdg.github.io/sdg-translations/assets/img/goals/ru/17.png" alt="Партнерство в интересах устойчивого развития - Цель 17" />
         </a>
       </div>
       <div class="col-xs-8 col-md-9 col-lg-10">
         <h1>
-          <a href="/sdg-site-armenia/ru/partnerships-for-the-goals">
+          <a href="/sdg-site-armenia/ru/17">
             <span class="hidden-sm hidden-md hidden-lg">Цель 17: </span>Укрепление средств осуществления и активизация работы в рамках Глобального
 партнерства в интересах устойчивого развития
           </a>
@@ -200,7 +246,7 @@
   <ol class="breadcrumb">
   <li><a href="/sdg-site-armenia/ru/">Главная</a></li>
   
-      <li><a href="/sdg-site-armenia/ru/partnerships-for-the-goals" title="Strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development">Цель 17</a></li>
+      <li><a href="/sdg-site-armenia/ru/17" title="Strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development">Цель 17</a></li>
       <li class="active">Показатель 17.18.3</li>
   
 </ol>
@@ -241,17 +287,17 @@
     
 
       
-       
- 
+      
+
 
 <div id="headlineTable">
-  
+
   <div id="datatables">
-    
+
     <a href="https://armstat.github.io/sdg-data-armenia/staging/headline/17-18-3.csv" class="btn btn-primary btn-download" download="indicator_17-18-3.csv" tabindex="0" role="button">Скачать заголовки CSV</a>
-    
+
     <a href="https://armstat.github.io/sdg-data-armenia/staging/data/17-18-3.csv" class="btn btn-primary btn-download" style='float:left;margin-right:1em' download='indicator_17-18-3.csv' tabindex='0' role='button'>Скачать исходные CSV</a>
-    
+
     <h3>Headline data</h3>
     <table class="table-responsive table table-hover dataTable no-footer" role="grid">
       <caption></caption>
@@ -275,27 +321,11 @@
         <tr>
           
           
-          <td>2015</td>    
+          <td>2015</td>
           
           
           
-          <td>yes=1, no=0</td>    
-          
-          
-          
-          <td class="table-value">1.0</td>
-          
-          
-        </tr>
-        
-        <tr>
-          
-          
-          <td>2016</td>    
-          
-          
-          
-          <td>yes=1, no=0</td>    
+          <td>yes=1, no=0</td>
           
           
           
@@ -307,11 +337,27 @@
         <tr>
           
           
-          <td>2017</td>    
+          <td>2016</td>
           
           
           
-          <td>yes=1, no=0</td>    
+          <td>yes=1, no=0</td>
+          
+          
+          
+          <td class="table-value">1.0</td>
+          
+          
+        </tr>
+        
+        <tr>
+          
+          
+          <td>2017</td>
+          
+          
+          
+          <td>yes=1, no=0</td>
           
           
           
@@ -323,15 +369,16 @@
       </tbody>
     </table>
   </div>
-  
+
   <div id="datatableFooter">
     
     
     
     
   </div>
-  
+
 </div>
+
       
 
       <section>
@@ -1146,16 +1193,6 @@
 <!-- <script id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=GSA"></script> -->
 <!-- Google Analytics -->
 
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-
-
-</script>
-
 <!-- /.container </div> -->
 <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
@@ -1177,7 +1214,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 <script>
   var remoteDataBaseUrl = 'https://armstat.github.io/sdg-data-armenia/staging';
 </script>
-<script src='/sdg-site-armenia/assets/js/sdg.js?v=20190408000053'></script>
+<script src='/sdg-site-armenia/assets/js/sdg.js?v=20190408060951'></script>
 <script>
 $(function() {
     if($('#indicatorData').length) {
@@ -1231,6 +1268,9 @@ $(function() {
 
 });
 </script>
+
+
+
 
 </body>
 </html>
